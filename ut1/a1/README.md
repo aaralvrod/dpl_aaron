@@ -107,27 +107,43 @@ git remote add upstream https://github.com/aaralvrod/git-work.git
 git fetch upstream
 git checkout -b
 ```
+
 modificar index.html
 
 ``` git
 git add index.html
-git commit -m "Adjust startup text formatting"
+git commit -m ""
 git push upstream custom-text
 ```
 
 
 10. user1 y user2 tendrán una pequeña conversación en la página del PR, donde cada usuario incluirá, al menos, un cambio más.
+
+
 11. user1 finalmente aprobará el PR, cerrará la issue creada (usando una referencia a la misma) y actualizará la rama principal en su copia local.
+
+
 12. user2 deberá incorporar los cambios de la rama principal de upstream en su propia rama principal.
+
+
 13. user1 creará una issue con el título "Improve UX with cool colors".
+
 14. user1 cambiará la línea 10 de cover.css a: color: purple;
+
 15. user1 hará simplemente un commit local en main → NO HACER git push.
+
 16. user2 creará una nueva rama cool-colors y cambiará la línea 10 de cover.css a: color: darkgreen;
+
 17. user2 enviará un PR a user1.
+
 18. user1 probará el PR de user2 (en su copia local). A continuación tratará de mergear el contenido de la rama cool-colors en su rama principal y tendrá que gestionar el conflicto: Dejar el contenido que viene de user2.
+
 19. Después del commit para arreglar el conflicto, user1 modificará la línea 11 de cover.css a: text-shadow: 2px 2px 8px lightgreen;
+
 20. user1 hará un commit especificando en el mensaje de commit el cambio hecho (sombra) y que se cierra la issue creada (usar referencia a la issue). A continuación subirá los cambios a origin/main.
+
 21. user1 etiquetará esta versión (en su copia local) como 0.1.0 y después de subir los cambios creará una "release" en GitHub apuntando a esta etiqueta.
+
 
 
 
