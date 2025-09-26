@@ -125,6 +125,10 @@ git push upstream custom-text
 
 12. user2 deberá incorporar los cambios de la rama principal de upstream en su propia rama principal.
 
+``` git
+git checkout main
+git pull origin main
+```
 
 13. user1 creará una issue con el título "Improve UX with cool colors".
 
