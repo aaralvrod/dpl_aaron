@@ -137,7 +137,7 @@ git pull origin main
 
 **14. user1 cambiará la línea 10 de cover.css a: color: purple;**
 
-Foto
+![alt text](images/cambio1.png)
 
 **15. user1 hará simplemente un commit local en main → NO HACER git push.**
 
@@ -151,7 +151,7 @@ git commit -m 'Modificado color linea 10'
 ``` git 
 git checkout -b cool-colors
 ```
-Se modifica fichero css
+![alt text](images/image.png)
 
 ``` git
 git add .
@@ -180,7 +180,7 @@ git commit
 
 **19. Después del commit para arreglar el conflicto, user1 modificará la línea 11 de cover.css a: text-shadow: 2px 2px 8px lightgreen;**
 
-
+![alt text](images/cambio2.png)
 
 **20. user1 hará un commit especificando en el mensaje de commit el cambio hecho (sombra) y que se cierra la issue creada (usar referencia a la issue). A continuación subirá los cambios a origin/main.**
 
