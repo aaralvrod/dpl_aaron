@@ -6,7 +6,7 @@
 
 </center>
 
-***Nombre:*** Aarón Álvarez Ródriguez
+***Nombre:*** Aarón Álvarez Ródriguez y Eduardo Rabadán Melián
 ***Curso:*** 2º de Ciclo Superior de Desarrollo de Aplicaciones Web.
 
 ### ÍNDICE
