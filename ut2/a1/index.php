@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-    <h1>Calculadora en PHP</h1>
+    <h1>Calculadora en entorno nativo</h1>
     <form method="POST" action="">
         <label for="num1">Número 1:</label>
         <input type="number" name="num1" id="num1" step="any" required>
@@ -37,7 +37,7 @@
             <option value="multiply">Multiplicación (x)</option>
             <option value="divide">División (÷)</option>
         </select>
-
+        <img src="calculadora.png" alt="Imagen calculadora">
         <button type="submit">Calcular</button>
     </form>
 
