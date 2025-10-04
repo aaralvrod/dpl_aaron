@@ -6,6 +6,7 @@ UT2-A1: Implantación de arquitecturas web
 </center>
 
 ***Nombre:*** Aarón Álvarez Rodríguez
+
 ***Curso:*** 2º de Ciclo Superior de Desarrollo de Aplicaciones Web.
 
 ### ÍNDICE
@@ -19,7 +20,7 @@ UT2-A1: Implantación de arquitecturas web
 
 #### ***Introducción***. <a name="id1"></a>
 
-Implementar una aplicación PHP que funcione como calculadora usando nginx = PHP-FPM
+Implementar una aplicación PHP que funcione como calculadora usando nginx + PHP-FPM
 
 #### ***Objetivos***. <a name="id2"></a>
 
@@ -37,7 +38,43 @@ Enumeramos el material empleado tanto hardware como software y las conficuracion
 
 #### ***Desarrollo***. <a name="id4"></a>
 
-En esta parte explicamos detalladamente los pasos que seguimos para realizar la práctica incluyendo capturas de pantalla y explicando que vemos en ellas. 
+### Entorno nativo
+
+1. Instalar nginx y php-fpm
+
+```bash
+sudo apt update
+sudo apt install -y nginx php-fpm
+```
+
+2. Comprobar que esten activos
+
+``` bash
+sudo systemctl status nginx
+sudo systemctl status php8.3-fpm
+```
+
+3. Clonar repositorio en el home
+
+``` git
+git clone https://github.com/aaralvrod/dpl_aaron.git
+```
+
+4. Iniciar servidor PHP local
+
+``` bash
+sudo php -S localhost:8080
+```
+
+El puerto 80 sale que esta ya en uso
+
+5. Abrir en el navegador -> `http://localhost:8080`
+
+Resultado
+
+![alt text](image.png)
+
+### Entorno Dockerizado
 
 > ***IMPORTANTE:*** si estamos capturando una terminal no hace falta capturar todo el escritorio y es importante que se vea el nombre de usuario.
 
