@@ -114,6 +114,14 @@ sudo systemctl reload nginx
 ## Entorno Dockerizado
 
 
+**1. Instalar Docker**
+
+``` bash
+sudo curl -fsSL https://get.docker.com/ -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker aaralvrod
+```
+
 **1. Creamos el Dockerfile**
 
 ``` docker
