@@ -40,20 +40,20 @@ Enumeramos el material empleado tanto hardware como software y las conficuracion
 
 ## Entorno nativo
 
-**1. Clonar repositorio en el home**
+1. **Clonar repositorio en el home**
 
 ``` git
 git clone https://github.com/aaralvrod/dpl_aaron.git
 ```
 
-**2. Instalar nginx y php-fpm**
+2. **Instalar nginx y php-fpm**
 
 ```bash
 sudo apt update
 sudo apt install -y nginx php-fpm
 ```
 
-**3. Comprobar que esten activos**
+3. **Comprobar que esten activos**
 
 ``` bash
 sudo systemctl status nginx
@@ -61,7 +61,7 @@ sudo systemctl status php8.3-fpm
 ```
 
 
-**4. Configuramos nginx, para ello hacemos `sudo nano /etc/nginx/sites-available/calculadora`**
+4. **Configuramos nginx, para ello hacemos `sudo nano /etc/nginx/sites-available/calculadora`**
 
 ``` nginx
 server {
@@ -87,25 +87,25 @@ server {
 }
 ```
 
-**5. Creamos un enlace simbolico**
+5. **Creamos un enlace simbolico**
 
 ``` bash
 sudo ln -s /etc/nginx/sites-available/calculadora /etc/nginx/sites-enabled/
 ```
 
-**6. Comprobamos que la sintaxtis del archivo de configuracion de nginx sea correcta**
+6. **Comprobamos que la sintaxtis del archivo de configuracion de nginx sea correcta**
 
 ``` bash
 sudo nginx -t
 ```
 
-**7. Recargamos nginx**
+7. **Recargamos nginx**
 
 ``` bash
 sudo systemctl reload nginx
 ```
 
-**8. Abrimos en el navegador -> `http://localhost:8023`**
+8. **Abrimos en el navegador -> `http://localhost:8023`**
 
 **Resultado**
 
@@ -113,7 +113,7 @@ sudo systemctl reload nginx
 
 ## Entorno Dockerizado
 
-**1. Instalar Docker**
+1. **Instalar Docker**
 
 ``` bash
 sudo curl -fsSL https://get.docker.com/ -o get-docker.sh
@@ -121,7 +121,7 @@ sudo sh get-docker.sh
 sudo usermod -aG docker aaralvrod
 ```
 
-**2. Creamos el Dockerfile**
+2. **Creamos el Dockerfile**
 
 ``` docker
 FROM php:8.3-fpm
@@ -150,13 +150,13 @@ EXPOSE 8023
 CMD ["sh", "-c", "php-fpm -F & nginx -g 'daemon off;'"]
 ```
 
-**3. Creamos el contenedor**
+3. **Creamos el contenedor**
 
 ``` bash
 sudo docker build -t calculadora_dockerizada .
 ```
 
-**4. Corremos el contenedor**
+4. **Corremos el contenedor**
 
 ``` bash
 sudo docker run -d -p 8023:8023 calculadora_dockerizada
