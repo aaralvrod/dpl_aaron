@@ -60,7 +60,13 @@ sudo systemctl status php8.3-fpm
 git clone https://github.com/aaralvrod/dpl_aaron.git
 ```
 
-4. Iniciar servidor PHP local
+4. Nos a la carpeta correspondiente
+
+``` bash
+cd dpl_aaron/ut2/a1
+```
+
+5. En la misma carpeta iniciamos el servidor PHP local
 
 ``` bash
 sudo php -S localhost:8080
@@ -68,13 +74,15 @@ sudo php -S localhost:8080
 
 El puerto 80 sale que esta ya en uso
 
-5. Abrir en el navegador -> `http://localhost:8080`
+6. Abrir en el navegador -> `http://localhost:8080`
 
 Resultado
 
 ![alt text](image.png)
 
 ### Entorno Dockerizado
+
+
 
 > ***IMPORTANTE:*** si estamos capturando una terminal no hace falta capturar todo el escritorio y es importante que se vea el nombre de usuario.
 

@@ -1,14 +1,25 @@
-FROM debian
+FROM php:8.3-fpm
 
-MAINTAINER dpl_aaron23
+# Instala Nginx
+RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 
-RUN apt update
-RUN apt install -y apt-utils
-RUN apt install -y nginx
+# Copia los archivos de la aplicación
+COPY . /var/www/html/
 
-COPY holamundo2.html /var/www/html
-RUN chmod 666 /var/www/html/holamundo2.html
+# Copia una configuración mínima de Nginx
+RUN echo 'server { \
+    listen 8023; \
+    server_name localhost; \
+    root ~/dpl_aaron/ut2/a1; \
+    index index.php; \
+    location ~ \.php$$ { \
+        include fastcgi_params; \
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock; \
+        fastcgi_param SCRIPT_FILENAME $$document_root$$fastcgi_script_name; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+EXPOSE 8023
 
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+# Script de inicio para ejecutar PHP-FPM y Nginx juntos
+CMD service php-fpm start && nginx -g 'daemon off;'
