@@ -10,7 +10,7 @@ COPY . /var/www/html/
 RUN echo 'server { \
     listen 8023; \
     server_name localhost; \
-    root ~/dpl_aaron/ut2/a1; \
+    root /var/www/html/; \
     index index.php; \
     location ~ \.php$$ { \
         include fastcgi_params; \
