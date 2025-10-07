@@ -24,7 +24,7 @@ Implementar una aplicación PHP que funcione como calculadora usando nginx + PHP
 
 #### ***Objetivos***. <a name="id2"></a>
 
-Aquí explicamos los objetivos que se pretenden alcanzar al realizar la práctica.
+Practicar con Docker y Nginx
 
 #### ***Material empleado***. <a name="id3"></a>
 
@@ -40,20 +40,20 @@ Enumeramos el material empleado tanto hardware como software y las conficuracion
 
 ## Entorno nativo
 
-1. Clonar repositorio en el home
+**1. Clonar repositorio en el home**
 
 ``` git
 git clone https://github.com/aaralvrod/dpl_aaron.git
 ```
 
-1. Instalar nginx y php-fpm
+**2. Instalar nginx y php-fpm**
 
 ```bash
 sudo apt update
 sudo apt install -y nginx php-fpm
 ```
 
-2. Comprobar que esten activos
+**3. Comprobar que esten activos**
 
 ``` bash
 sudo systemctl status nginx
@@ -61,7 +61,7 @@ sudo systemctl status php8.3-fpm
 ```
 
 
-4. Configuramos nginx, para ello hacemos `sudo nano /etc/nginx/sites-available/calculadora`
+**4. Configuramos nginx, para ello hacemos `sudo nano /etc/nginx/sites-available/calculadora`**
 
 ``` nginx
 server {
@@ -87,34 +87,34 @@ server {
 }
 ```
 
-5. Creamos un enlace simbolico
+**5. Creamos un enlace simbolico**
 
 ``` bash
 sudo ln -s /etc/nginx/sites-available/calculadora /etc/nginx/sites-enabled/
 ```
 
-6. Comprobamos que la sintaxtis del archivo de configuracion de nginx sea correcta
+**6. Comprobamos que la sintaxtis del archivo de configuracion de nginx sea correcta**
 
 ``` bash
 sudo nginx -t
 ```
 
-7. Recargamos nginx
+**7. Recargamos nginx**
 
 ``` bash
 sudo systemctl reload nginx
 ```
 
-6. Abrimos en el navegador -> `http://localhost:8023`
+**8. Abrimos en el navegador -> `http://localhost:8023`**
 
-Resultado
+**Resultado**
 
 ![alt text](image.png)
 
-### Entorno Dockerizado
+## Entorno Dockerizado
 
 
-1. Creamos el Dockerfile
+**1. Creamos el Dockerfile**
 
 ``` docker
 FROM php:8.3-fpm
@@ -143,19 +143,19 @@ EXPOSE 8023
 CMD ["sh", "-c", "php-fpm -F & nginx -g 'daemon off;'"]
 ```
 
-2. Creamos el contenedor
+**2. Creamos el contenedor**
 
 ``` bash
 sudo docker build -t calculadora_dockerizada .
 ```
 
-3. Corremos el contenedor
+**3. Corremos el contenedor**
 
 ``` bash
 sudo docker run -d -p 8023:8023 calculadora_dockerizada
 ```
 
-Resultado
+**Resultado**
 
 ![alt text](image-1.png)
 
@@ -163,4 +163,4 @@ Resultado
 
 #### ***Conclusiones***. <a name="id5"></a>
 
-Una practica un poco complicada para gente que no ha visto nada de docker, nginx ni php-fpm en su vida como puede ser mi caso pero gracias a la documentacion del campus y companeros se pudo completar. 
+Una practica un poco complicada para gente que no ha visto nada de docker, nginx ni php-fpm en su vida como puede ser mi caso pero gracias a la documentacion del campus y compañeros se pudo completar. 

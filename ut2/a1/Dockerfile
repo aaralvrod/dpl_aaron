@@ -1,13 +1,9 @@
 FROM php:8.3-fpm
 
-# Instalar Nginx
-RUN apt-get update && apt-get install -y nginx \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 
-# Copiar la aplicación
 COPY . /var/www/html
 
-# Sobrescribir la configuración por defecto de Nginx
 RUN echo 'server { \
     listen 8023; \
     server_name localhost; \
@@ -21,11 +17,8 @@ RUN echo 'server { \
     } \
 }' > /etc/nginx/sites-available/default
 
-# Ajustar permisos
-RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R www-data:www-data /var/www/html
 
-# Exponer puerto
 EXPOSE 8023
 
-# Iniciar PHP-FPM y Nginx
 CMD ["sh", "-c", "php-fpm -F & nginx -g 'daemon off;'"]
