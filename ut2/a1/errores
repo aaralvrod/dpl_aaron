@@ -1,2 +1,23 @@
- docker build -t calculadora_dockerizada .
-ERROR: permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Head "http://%2Fvar%2Frun%2Fdocker.sock/_ping": dial unix /var/run/docker.sock: connect: permission denied
+aaralvrod@aaralvrod-VirtualBox:~/dpl_aaron/ut2/a1$ sudo docker run -d -p 8023:8023 calculadora_dockerizada
+d077d407a0aa8b5351d2a5532ddcad690c5352924c4898563dfb72eb0b0d604f
+
+
+  123  docker build -t
+  124  sudo curl -fsSL https://get.docker.com/ -o get-docker.sh
+  125  cd
+  126  sudo curl -fsSL https://get.docker.com/ -o get-docker.sh
+  127  sudo sh get-docker.sh
+  128  sudo usermod -aG docker aaralvrod
+  129  docker
+  130  cd dpl_aaron/
+  131  cd ut2
+  132  cd a1
+  133  la
+  134  ls
+  135  clear
+  136  docker build -t .
+  137  docker build -t calculadora_dockerizada .
+  138  sudo docker build -t calculadora_dockerizada .
+  139  docker run -d -p 8023:8023 calculadora_dockerizada
+  140  sudo docker run -d -p 8023:8023 calculadora_dockerizada
+  141  history
