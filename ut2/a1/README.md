@@ -113,7 +113,6 @@ sudo systemctl reload nginx
 
 ## Entorno Dockerizado
 
-
 **1. Instalar Docker**
 
 ``` bash
@@ -122,7 +121,7 @@ sudo sh get-docker.sh
 sudo usermod -aG docker aaralvrod
 ```
 
-**1. Creamos el Dockerfile**
+**2. Creamos el Dockerfile**
 
 ``` docker
 FROM php:8.3-fpm
@@ -151,13 +150,13 @@ EXPOSE 8023
 CMD ["sh", "-c", "php-fpm -F & nginx -g 'daemon off;'"]
 ```
 
-**2. Creamos el contenedor**
+**3. Creamos el contenedor**
 
 ``` bash
 sudo docker build -t calculadora_dockerizada .
 ```
 
-**3. Corremos el contenedor**
+**4. Corremos el contenedor**
 
 ``` bash
 sudo docker run -d -p 8023:8023 calculadora_dockerizada
