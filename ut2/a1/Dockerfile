@@ -17,7 +17,7 @@ RUN echo 'server { \
     } \
 }' > /etc/nginx/sites-available/default
 
-RUN chmod -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 8023
 
