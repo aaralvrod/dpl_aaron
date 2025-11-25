@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nginx + ngx_small_light</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background: #ffffff;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 30px;
+        }
+
+        .formulario {
+            margin-bottom: 50px;
+        }
+
+        .formulario label {
+            font-weight: bold;
+            display: inline-block;
+            width: 150px;
+            margin-bottom: 15px;
+        }
+
+        .formulario input {
+            width: 100px;
+            padding: 4px;
+            margin-bottom: 15px;
+        }
+
+        #generar {
+            margin-left: 170px;
+            padding: 10px 25px;
+            font-size: 20px;
+            background: #e5f16b;
+            border: 2px solid black;
+            cursor: pointer;
+        }
+
+        .galeria {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .galeria img {
+            border-radius: 10px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Nginx + ngx_small_light</h1>
+
+<div class="formulario">
+    <label>Tamaño</label><input id="size" type="text" value="200"><br>
+    <label>Ancho del borde</label><input id="border_w" type="text" value="20"><br>
+    <label>Color del borde</label><input id="border_c" type="text" value="4D4D4D"><br>
+    <label>Enfoque</label><input id="focus" type="text"><br>
+    <label>Desenfoque</label><input id="blur" type="text"><br>
+    <button id="generar">Generar</button>
+</div>
+
+<div class="galeria" id="galeria"></div>
+
+<script>
+function generarGaleria() {
+    const size = document.getElementById("size").value;
+    const borderW = document.getElementById("border_w").value;
+    const borderC = document.getElementById("border_c").value;
+    const sharpen = document.getElementById("focus").value;
+    const blur = document.getElementById("blur").value;
+
+    const contenedor = document.getElementById("galeria");
+    contenedor.innerHTML = "";
+
+    for (let i = 1; i <= 20; i++) {
+        let num = String(i).padStart(2, '0');
+        
+        let params = `dw=${size},dh=${size},bw=${borderW},bh=${borderW},border=${borderC.replace('#', '')}`;
+        if (sharpen) params += `,sharpen=${sharpen}`;
+        if (blur) params += `,blur=${blur}`;
+        
+        let img = document.createElement("img");
+        img.src = `/small_light(${params})/img/image${num}.jpg`;
+        img.alt = `Imagen ${num}`;
+        
+        contenedor.appendChild(img);
+    }
+}
+
+document.getElementById("generar").onclick = generarGaleria;
+generarGaleria();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nginx + ngx_small_light</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background: #ffffff;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* FORMULARIO CENTRADO ARRIBA */
+        .formulario {
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .formulario label {
+            font-weight: bold;
+            display: inline-block;
+            width: 150px;
+            margin-bottom: 15px;
+        }
+
+        .formulario input {
+            width: 100px;
+            padding: 4px;
+            margin-bottom: 15px;
+        }
+
+        #generar {
+            margin-left: 170px;
+            padding: 10px 25px;
+            font-size: 20px;
+            background: #e5f16b;
+            border: 2px solid black;
+            cursor: pointer;
+        }
+
+        /* GALERÍA DEBAJO DEL FORMULARIO */
+        .galeria {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .galeria img {
+            width: 150px;
+            height: 150px;
+            border: 8px solid #C77DFF;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .paginacion {
+            font-size: 40px;
+            letter-spacing: 10px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .image-info {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Nginx + ngx_small_light</h1>
+
+<!-- FORMULARIO ARRIBA -->
+<div class="formulario">
+    <label>Tamaño</label><input id="size" type="text" value="300"><br>
+
+    <label>Ancho del borde</label><input id="border_w" type="text" value="20"><br>
+
+    <label>Color del borde</label><input id="border_c" type="text" value="4D4D4D"><br>
+
+    <label>Enfoque</label><input id="focus" type="text" value="2x1"><br>
+
+    <label>Desenfoque</label><input id="blur" type="text" value="3x1"><br>
+
+    <button id="generar">Generar</button>
+</div>
+
+<!-- GALERÍA DEBAJO DEL FORMULARIO -->
+<div class="galeria" id="galeria"></div>
+
+<!-- MENSAJE DE ERROR -->
+<div class="error" id="error"></div>
+
+<!-- PAGINACIÓN -->
+<div class="paginacion">• • •</div>
+
+<script>
+function generarGaleria() {
+    const size = document.getElementById("size").value;
+    const borderW = document.getElementById("border_w").value;
+    const borderC = document.getElementById("border_c").value;
+    const focus = document.getElementById("focus").value;
+    const blur = document.getElementById("blur").value;
+    
+    const contenedor = document.getElementById("galeria");
+    const errorDiv = document.getElementById("error");
+    contenedor.innerHTML = "";
+    errorDiv.textContent = "";
+
+    // Validar parámetros requeridos
+    if (!size || !borderW || !borderC) {
+        errorDiv.textContent = "Los campos Tamaño, Ancho del borde y Color del borde son obligatorios";
+        return;
+    }
+
+    try {
+        for (let i = 1; i <= 12; i++) {
+            let num = String(i).padStart(2, '0');
+            let imageName = `image${num}.jpg`;
+            
+            // OPCIÓN 1: Usando small_light con parámetros (RECOMENDADO)
+            let params = [
+                `dw=${size}`,
+                `dh=${size}`,
+                `bw=${borderW}`,
+                `border=${borderC.replace('#', '')}`
+            ];
+            
+            if (focus) {
+                params.push(`sharpen=${focus}`);
+            }
+            
+            if (blur) {
+                params.push(`blur=${blur}`);
+            }
+            
+            // Construir URL - FORMA CORRECTA para tu configuración
+            let url = `/small_light/${params.join(',')}/${imageName}`;
+            
+            // OPCIÓN 2: Si la anterior no funciona, probar con esta:
+            // let url = `/img/${imageName}?small_light=${params.join('&')}`;
+            
+            let imgContainer = document.createElement("div");
+            imgContainer.style.textAlign = "center";
+            
+            let img = document.createElement("img");
+            img.src = url;
+            img.alt = `Imagen ${num}`;
+            img.style.display = "block";
+            img.style.margin = "0 auto";
+            
+            let info = document.createElement("div");
+            info.className = "image-info";
+            info.textContent = `Imagen ${num}`;
+            
+            img.onload = function() {
+                console.log(`✅ Imagen cargada: ${url}`);
+            };
+            
+            img.onerror = function() {
+                console.error(`❌ Error cargando: ${url}`);
+                info.textContent = `❌ Imagen ${num} (Error)`;
+                info.style.color = "red";
+            };
+            
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(info);
+            contenedor.appendChild(imgContainer);
+        }
+    } catch (error) {
+        errorDiv.textContent = "Error al generar las imágenes: " + error.message;
+        console.error("Error:", error);
+    }
+}
+
+document.getElementById("generar").onclick = generarGaleria;
+
+// Cargar al inicio
+document.addEventListener('DOMContentLoaded', generarGaleria);
+</script>
+
+</body>
+</html>
