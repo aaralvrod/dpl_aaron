@@ -1,0 +1,18 @@
+# Laravel
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.production
+.env.backup
+.phpunit.result.cache
+
+# Sistema
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+*.swp
+*.swo

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from prettyconf import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%^u+(wq37!04f*c8_iynugto)!68k)h$9=1vyw0mjg8x37f*g%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=config.boolean)
 
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=['*'], cast=config.list)
 
 
 # Application definition
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME', default='travelroad'),
+        'USER': config('DB_USERNAME', default='travelroad_user'),
+        'PASSWORD': config('DB_PASSWORD', default='dpl0000'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default=5432, cast=int),
     }
 }
 
