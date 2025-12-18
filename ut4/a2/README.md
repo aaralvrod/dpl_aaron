@@ -80,7 +80,7 @@ pgadmin4
 
 Rellenamos la configuración
 
-````bash
+``` bash
 (pgadmin4) xxxxxx:~$ pgadmin4
 NOTE: Configuring authentication for SERVER mode.
 
@@ -171,4 +171,174 @@ active
 
 Registramos el servidor
 
+![alt text](img/image.png)
+![alt text](img/image-1.png)
+![alt text](img/image-2.png)
+
+Para acceder externamente hacemos lo siguiente
+
+```bash
+sudo vi /etc/postgresql/15/main/postgresql.conf
+```
+
+Y añadimos la siguiente linea
+
+```
+listen_addresses = '*'
+```
+
+Otorgamos permisos al usuario travelroad_user a la base de datos travelroad
+
+``` bash
+sudo vi /etc/postgresql/15/main/pg_hba.conf
+```
+Y añadimos al final del fichero lo siguinte
+
+```
+host travelroad travelroad_user 0.0.0.0/0 md5
+``` 
+
+Recargamos
+
+```
+sudo systemctl restart postgresql
+```
+
+Comprobamo que el servicio PostgreSQL ya está escuchando en todas las IPs:
+
+``` bash
+sudo netstat -napt | grep postgres | grep -v tcp6
+
+tcp        0      0 0.0.0.0:5432            0.0.0.0:*               LISTEN      23700/postgres
+```
+
+# Entorno de desarrollo
+
+1. Instalamos lo siguiente `sudo apt install -y php8.2-pgsql` para tener disponible la función pg_connect.
+
+2. Desarrollamos la aplicacion php
+
+``` php
+<?php
+include 'config.php';
+
+$conn = pg_connect("host=$host dbname=$dbname user=$user password=$password");
+
+if (!$conn) {
+    die("Error de conexión");
+}
+
+$sql = "SELECT name, visited FROM places ORDER BY visited, name";
+$result = pg_query($conn, $sql);
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TravelRoad</title>
+</head>
+<body>
+    <h1>My Travel Bucket List</h1>
+    
+    <h2>Places I'd Like to Visit</h2>
+    <ul>
+    <?php while ($row = pg_fetch_assoc($result)): ?>
+        <?php if (!$row['visited']): ?>
+            <li><?= htmlspecialchars($row['name']) ?></li>
+        <?php endif; ?>
+    <?php endwhile; ?>
+    </ul>
+    
+    <h2>Places I've Already Been To</h2>
+    <ul>
+    <?php pg_result_seek($result, 0); ?>
+    <?php while ($row = pg_fetch_assoc($result)): ?>
+        <?php if ($row['visited']): ?>
+            <li><?= htmlspecialchars($row['name']) ?></li>
+        <?php endif; ?>
+    <?php endwhile; ?>
+    
+    <?php pg_close($conn); ?>
+    </ul>
+</body>
+</html>
+```
+
+Configuramos el servidor de nginx
+
+```
+server {
+    server_name php.travelroad.local;
+    root /home/dpl_alumno/xxxxxx/ut4/a2/travelroad;
+    
+    index index.php index.html;
+    
+    location / {
+        try_files $uri $uri/ =404;
+    }
+    
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass unix:/var/run/php/php8.4-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+}
+```
+
+Creamos un config.php que se utiliza en el index.php
+
+```
+<?php
+$host = "localhost";
+$dbname = "travelroad";
+$user = "travelroad_user";
+$password = "dpl0000";
+?>
+```
+
+Comprobamos que la sintaxis este correcta y restarteamos nginx
+
+``` bash
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+Creamos el deploy.sh
+
+```
+#!/bin/bash
+ssh nombremaquina@ipmaquina "cd repositorio && git pull"
+```
+
+# Entorno de producción
+
+Clonamos el repositorio
+
+Configuramos el virtual host de producción
+
+```
+server {
+    server_name php.travelroad.xxxxxx.arkania.es;
+    root /home/dpl_alumno/xxxxxx/ut4/a2/travelroad;
+    
+    index index.php index.html;
+    
+    location / {
+        try_files $uri $uri/ =404;
+    }
+    
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass unix:/var/run/php/php8.4-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+}
+```
+
+Comprobamos que la sintaxis este correcta y restarteamos nginx
+
+``` bash
+sudo nginx -t
+sudo systemctl restart nginx
+```
 
