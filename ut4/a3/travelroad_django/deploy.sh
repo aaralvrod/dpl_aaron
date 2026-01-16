@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ssh dplprod_aaron@10.102.23.40 "
+ssh dplprod_aaron@100.102.23.40 "
   cd /home/dplprod_aaron/dpl_aaron/ut4/a3/travelroad_django
   git pull
 
