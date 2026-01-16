@@ -8,7 +8,7 @@ echo "Servidor: ${SERVER}"
 echo "Directorio: ${PROJECT_DIR}"
 echo
 
-ssh ${SERVER} << 'ENDSSH'
+ssh -t ${SERVER} << 'ENDSSH'
   set -e  # Detener script en caso de error
   
   echo "1. 📂 Accediendo al directorio del proyecto..."
