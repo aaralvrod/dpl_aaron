@@ -6,6 +6,6 @@ app_name = 'places'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('whised/', views.whised, name='whised'),
+    path('wished/', views.wished, name='wished'),
     path('visited/', views.visited, name='visited'),
 ]
